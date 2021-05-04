@@ -1,0 +1,43 @@
+import axios from 'axios'
+
+
+//Initialize your component state with country 
+name & country code
+
+constructor(props) {
+    super(props);
+    this.state = {
+        countryName: '',
+        countryCode: ''
+    }
+}
+
+
+//Add this function to your component
+
+getGeoInfo = () => {
+    axios.get('https://ipapi.co/json/').then((response) => {
+        let data = response.data;
+        this.setState({
+            countryName: data.country_name,
+            countryCode: data.country_calling_code
+        });
+    }).catch((error) => {
+        console.log(error);
+    });
+};
+//And call this.getGeoInfo() to set country name & country code to your state. I called that from componentDidMount()
+
+componentDidMount(){
+    this.getGeoInfo();
+}
+
+//And you can read the state to get country name & country code
+render() {
+    return (
+        <div>
+            <p>Country Name: {this.state.countryName}</p>
+            <p>Country Code: {this.state.countryCode}</p>
+        </div>
+    )
+}
